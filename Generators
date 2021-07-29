@@ -9,6 +9,6 @@ def iter_filenames(folder, mask=''):
  """ the loop for mearging three dictationaries"""
  for i, d in enumerate([x, y, z]):
     for name in d:
-        if name not in final:
+        if name not in reference:
             final[name] = [0,0,0]
         final[name][i] = d[name]
