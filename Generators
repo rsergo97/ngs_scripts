@@ -5,3 +5,10 @@ def iter_filenames(folder, mask=''):
             if re.search(mask, name):
                 apath = os.path.join(root, name)
                 yield apath
+                
+ """ the loop for mearging three dictationaries"""
+ for i, d in enumerate([x, y, z]):
+    for name in d:
+        if name not in final:
+            final[name] = [0,0,0]
+        final[name][i] = d[name]
