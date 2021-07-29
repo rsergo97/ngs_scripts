@@ -6,7 +6,7 @@ def iter_filenames(folder, mask=''):
                 apath = os.path.join(root, name)
                 yield apath
                 
- """ the loop for mearging three dictationaries"""
+ """ the loop for merging three dictationaries"""
  for i, d in enumerate([x, y, z]):
     for name in d:
         if name not in reference:
