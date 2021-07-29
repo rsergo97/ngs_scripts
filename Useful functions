@@ -1,0 +1,52 @@
+def iter_filenames(folder, mask=''):
+    """ iter over files in folder. Return file name path."""
+    for root, dirs, files in os.walk(folder, topdown=False):
+        for name in files:
+            if re.search(mask, name):
+                apath = os.path.join(root, name)
+                yield apath
+                
+ """ the loop for merging three dictationaries"""
+ for i, d in enumerate([x, y, z]):
+    for name in d:
+        if name not in reference:
+            final[name] = [0,0,0]
+        final[name][i] = d[name]
+        
+def sc_iter_fasta_for_refseq(file_name):
+    """ Iter over fasta file."""
+
+    header = None
+    seq = []
+    with open(file_name) as fh:
+        data = fh.readlines()
+        for line in data:
+            if line.startswith(">"):
+                if seq:
+                    sequence = "".join(seq).upper()
+                    yield (header, sequence)
+                header = line.strip()[1:]
+                seq = []
+                continue
+            seq.append(line.upper().strip())
+        if seq or header:
+            sequence = "".join(seq).upper()
+            yield (header, sequence)
+
+### функция для работы с фастой
+def read_fasta_file(fasta_file):
+    fasta = {}
+    header = None
+    with open(fasta_file) as fh:
+        for i, line in enumerate(fh):
+            line = line.strip()
+            if line.startswith(">"):
+                if header:
+                    fasta[header] = "".join(seq)
+                header = line
+                seq = []
+            else:
+                seq.append(line)
+        if header:
+            fasta[header] = "".join(seq)
+    return fasta
