@@ -50,3 +50,12 @@ def read_fasta_file(fasta_file):
         if header:
             fasta[header] = "".join(seq)
     return fasta
+    
+def process_vcf(file_path):
+    with open(file_path, 'r') as file:
+        lines = [i for i in file if not i.startswith('##')]
+    return pd.read_csv(
+        io.StringIO(''.join(lines)),
+        dtype={'#CHROM': str, 'POS': int, 'ID': str, 'REF': str, 'ALT': str,
+               'QUAL': str, 'FILTER': str, 'INFO': str, 'FORMAT': str, 'SAMPLE': str},
+        names=['#CHROM', 'POS', 'ID', 'REF', 'ALT','QUAL', 'FILTER', 'INFO', 'FORMAT','SAMPLE'], sep='\t')
